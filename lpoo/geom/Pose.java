@@ -1,7 +1,7 @@
 package lpoo.geom;
-import java.util.Vector;
-
 import lpoo.math.*;
+
+
 public class Pose {
     private Vector3 position;
     private Quaternion orientation;
