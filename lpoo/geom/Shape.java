@@ -1,6 +1,6 @@
 package lpoo.geom;
+import lpoo.math.*;
 
-import lpoo.math.;
 public abstract class Shape{
     private String nome;
 
