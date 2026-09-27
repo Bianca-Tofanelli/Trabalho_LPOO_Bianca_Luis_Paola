@@ -20,17 +20,17 @@ public abstract class Shape{
     public Pose getPose(){
         return pose;
     }
-    public void setPose(Pose pose){
-        this.pose = pose;
-    }
-    public float getMass() {
+    public float getMass(){
         return this.mass;
     }
-    public Vector3 getCenterOfMass() {
+    public Vector3 getCenterOfMass(){
         return this.center_mass;
     }
-    public Matrix3 getLocalInertia() {
+    public Matrix3 getLocalInertia(){
         return this.local_inertia;
+    }
+    public void setPose(Pose pose){
+        this.pose = pose;
     }
     public abstract float getArea();
     public abstract float getVolume();
