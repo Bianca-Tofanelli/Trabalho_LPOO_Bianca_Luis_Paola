@@ -37,7 +37,7 @@ public class Sphere extends Primitive
     {
         float m = getMass();
         float i = (2f / 5f) * m * radius * radius;
-        return diagonal(i);
+        return Matrix3.diagonal(i);
     }
  
     @Override

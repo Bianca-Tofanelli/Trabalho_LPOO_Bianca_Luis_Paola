@@ -67,8 +67,8 @@ public class Capsule extends Primitive
         float ixxCyl = (mc / 12f) * (3f * r * r + h * h);
         float ixxSph = ms * ((2f / 5f) * r * r + s * s + 0.75f * s * r);
         float ixx = ixxCyl + ixxSph;
-
-        return diagonal(ixx,iyy,ixx);
+        
+        return Matrix3.diagonal(ixx, iyy, ixx);
     }
 
     @Override

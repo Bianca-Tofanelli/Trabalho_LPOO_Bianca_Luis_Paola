@@ -53,7 +53,7 @@ public class Cylinder extends Primitive
         float s = halfHeight;
         float iyy = 0.5f * m * radius * radius;
         float ixx = (m / 12f) * (3f * radius * radius + 4f * s * s);
-        return diagonal(ixx,iyy,ixx);
+        return Matrix3.diagonal(ixx, iyy, ixx);
     }
 
     @Override
