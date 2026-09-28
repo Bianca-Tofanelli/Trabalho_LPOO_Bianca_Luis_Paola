@@ -47,6 +47,7 @@ public class Box extends Primitive
     @Override
     protected Matrix3 computeLocalInertia()
     {
+        float m = getMass();
         float ix = (m / 3f) * (sy * sy + sz * sz);
         float iy = (m / 3f) * (sx * sx + sz * sz);
         float iz = (m / 3f) * (sx * sx + sy * sy);
