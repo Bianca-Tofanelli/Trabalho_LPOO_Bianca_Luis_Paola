@@ -20,7 +20,7 @@ public class CompositeShapeInstance extends Shape{
         }
         Vector3 min = localBounds.min();
         Vector3 max = localBounds.max();
-        Vector3[] corners = {
+        Vector3[] vertices = {
             new Vector3(min.x, min.y, min.z),
             new Vector3(max.x, min.y, min.z),
             new Vector3(min.x, max.y, min.z),
@@ -29,18 +29,17 @@ public class CompositeShapeInstance extends Shape{
             new Vector3(max.x, min.y, max.z),
             new Vector3(min.x, max.y, max.z),
             new Vector3(max.x, max.y, max.z)
-    };
-    Bounds3 worldBounds = new Bounds3();
-        for (Vector3 corner : corners) {
-            Vector3 transformedPoint = pose.transformTR(corner); 
+        };
+        Bounds3 worldBounds = new Bounds3();
+        for (Vector3 vertices : vertices) {
+            Vector3 transformedPoint = pose.transformTR(vertices); 
             worldBounds.expand(transformedPoint);
         }
-
         return worldBounds;
-    }
+        }
     public float getMass(){
         return base.getMass();
-    }  
+        }
     public Matrix3 getLocalInertia(){
         return base.getLocalInertia();
     }
