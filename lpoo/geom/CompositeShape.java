@@ -75,4 +75,7 @@ public class CompositeShape extends Shape{
     }
     return accumulatorInertia;
   }
+  public List<Shape> getShapes() {
+        return this.shapes;
+    }
 }  
