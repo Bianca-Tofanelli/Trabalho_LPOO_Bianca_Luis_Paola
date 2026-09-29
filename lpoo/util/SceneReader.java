@@ -12,13 +12,22 @@ import java.util.*;
  */
 public final class SceneReader
 {
-  public static List<RigidBody> read(File file)
-    throws FileNotFoundException
+  public static Scene readScene(String filePath) throws FileNotFoundException
   {
+    File file = new File(filePath);
+    String sceneName = file.getName().replaceFirst("[.][^.]+$", ""); 
+    Scene scene = new Scene(sceneName);
+
     try (Scanner sc = new Scanner(file))
     {
-      return new SceneReader(sc).readFile();
+      SceneReader reader = new SceneReader(sc);
+      List<RigidBody> bodies = reader.readFile();
+      for(RigidBody body : bodies)
+      {
+        scene.addActor(body);
+      }
     }
+    return scene;
   }
 
   private final Scanner sc;
@@ -31,7 +40,7 @@ public final class SceneReader
   private List<RigidBody> readFile()
   {
     List<RigidBody> actors = new ArrayList<>();
-    Map <String, CompositeShape> compositeDictionary = new HashMap<>();
+    Map<String, CompositeShape> compositeDictionary = new HashMap<>();
 
     while(sc.hasNext())
     {
@@ -89,6 +98,9 @@ public final class SceneReader
             String instanceName = sc.next(); 
             String baseName = sc.next();
             CompositeShape base = compositeDictionary.get(baseName);
+            if (base == null) {
+                throw new IllegalArgumentException("Forma composta não encontrada no dicionário: " + baseName);
+            }
             childShape = new CompositeShapeInstance(instanceName, base);
           }
 
@@ -160,6 +172,10 @@ public final class SceneReader
           String instanceName = sc.next(); 
           String baseName = sc.next();
           CompositeShape base = compositeDictionary.get(baseName);
+          
+          if (base == null) {
+              throw new IllegalArgumentException("Forma composta não encontrada no dicionário: " + baseName);
+          }
           shape = new CompositeShapeInstance(instanceName, base);
         }
 
@@ -198,4 +214,4 @@ public final class SceneReader
 
     return new Quaternion(x, y, z, w);
   }
-} // SceneReader
+}
