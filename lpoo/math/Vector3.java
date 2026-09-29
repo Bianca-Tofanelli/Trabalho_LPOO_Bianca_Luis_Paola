@@ -1,42 +1,77 @@
-package lpoo.geom;
-import lpoo.math.*;
+package lpoo.math;
 
-public class CompositeShapeInstance extends Shape{
-    private final CompositeShape base;  
-    public CompositeShapeInstance(String name, CompositeShape base){
-        super(name);
-        if (base == null) {
-            throw new IllegalArgumentException("Error!!");}
-        this.base = base;
-        this.center_mass = base.getCenterOfMass();
-        this.mass = base.getMass();
-        this.local_inertia = base.getLocalInertia();}
-    public Bounds3 getBounds(){
-        Bounds3 localBounds = base.getBounds();
-        if (localBounds == null){
-            return null;}
-        Vector3 min = localBounds.min();
-        Vector3 max = localBounds.max();
-        Vector3[] vertices = {
-            new Vector3(min.x, min.y, min.z),
-            new Vector3(max.x, min.y, min.z),
-            new Vector3(min.x, max.y, min.z),
-            new Vector3(max.x, max.y, min.z),
-            new Vector3(min.x, min.y, max.z),
-            new Vector3(max.x, min.y, max.z),
-            new Vector3(min.x, max.y, max.z),
-            new Vector3(max.x, max.y, max.z)};
-        Bounds3 worldBounds = new Bounds3();
-        for (int i = 0; i < vertices.length; i++) {
-            Vector3 transformedPoint = this.pose.transformTR(vertices[i]); 
-            worldBounds.expand(transformedPoint);}
-        return worldBounds;}
-    public float getMass(){
-        return base.getMass();}
-    public Matrix3 getLocalInertia(){
-        return base.getLocalInertia();}
-    public float getVolume(){
-        return base.getVolume();}
-    public float getArea(){
-        return base.getArea();}
-}
+/**
+ *
+ * @author Paulo Pagliosa
+ */
+public final class Vector3
+{
+  public static final Vector3 NULL = new Vector3(0);
+
+  public static Vector3 min(Vector3 a, Vector3 b)
+  {
+    return new Vector3(Math.min(a.x, b.x),
+      Math.min(a.y, b.y),
+      Math.min(a.z, b.z));
+  }
+
+  public static Vector3 max(Vector3 a, Vector3 b)
+  {
+    return new Vector3(Math.max(a.x, b.x),
+      Math.max(a.y, b.y),
+      Math.max(a.z, b.z));
+  }
+
+  public final float x;
+  public final float y;
+  public final float z;
+
+  public Vector3(float x, float y, float z)
+  {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
+
+  public Vector3(float x)
+  {
+    this(x, x, x);
+  }
+
+  public Vector3 add(Vector3 v)
+  {
+    return new Vector3(x + v.x, y + v.y, z + v.z);
+  }
+
+  public Vector3 sub(Vector3 v)
+  {
+    return new Vector3(x - v.x, y - v.y, z - v.z);
+  }
+
+  public Vector3 mul(float s)
+  {
+    return new Vector3(x * s, y * s, z * s);
+  }
+
+  public float dot(Vector3 v)
+  {
+    return x * v.x + y * v.y + z * v.z;
+  }
+
+  public float normSquared()
+  {
+    return dot(this);
+  }
+
+  public float norm()
+  {
+    return (float)Math.sqrt(normSquared());
+  }
+
+  @Override
+  public String toString()
+  {
+    return String.format("(%g,%g,%g)", x, y, z);
+  }
+
+} // Vector3
