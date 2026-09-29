@@ -31,12 +31,12 @@ public class CompositeShapeInstance extends Shape{
             new Vector3(max.x, max.y, max.z)
         };
         Bounds3 worldBounds = new Bounds3();
-        for (Vector3 vertices : vertices) {
-            Vector3 transformedPoint = pose.transformTR(vertices); 
+        for (int i = 0; i < vertices.length; i++) {
+            Vector3 transformedPoint = this.pose.transformTR(vertices[i]); 
             worldBounds.expand(transformedPoint);
         }
         return worldBounds;
-        }
+    }
     public float getMass(){
         return base.getMass();
         }
