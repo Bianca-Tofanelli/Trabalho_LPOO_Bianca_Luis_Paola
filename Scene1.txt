@@ -1,21 +1,15 @@
 composite SubBase
-box caixa_base 2.0 2.0 2.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0
-sphere esfera_topo 2.0 1.0 0.0 2.0 0.0 0.0 0.0 0.0 1.0
-end
+box caixa_base 2.0 2.0 2.0 1.0 pose 0.0 0.0 0.0 0.0 0.0 0.0 1.0
+sphere esfera_topo 2.0 1.0 pose 0.0 2.0 0.0 0.0 0.0 0.0 1.0
+end pose 0.0 0.0 0.0 0.0 0.0 0.0 1.0
 
 composite Foguete
-cylinder corpo_foguete 3.0 5.0 1.5 0.0 -5.0 0.0 0.0 0.0 0.0 1.0
-SubBase 0.0 0.0 0.0 0.0 0.0 0.0 1.0
-end
+cylinder corpo_foguete 3.0 5.0 1.5 pose 0.0 -5.0 0.0 0.0 0.0 0.0 1.0
+instance inst_SubBase SubBase pose 0.0 0.0 0.0 0.0 0.0 0.0 1.0
+end pose 0.0 0.0 0.0 0.0 0.0 0.0 1.0
 
-body AtorNave
-0.0 10.0 0.0 0.0 0.0 0.0 1.0
-Foguete 0.0 0.0 0.0 0.0 0.0 0.0 1.0
+actor AtorNave instance inst_Foguete Foguete pose 0.0 10.0 0.0 0.0 0.0 0.0 1.0
 
-body AtorCapsulaTeste
-15.0 0.0 0.0 0.0 0.0 0.0 1.0
-capsule super_capsula 2.0 4.0 1.5 0.0 0.0 0.0 0.0 0.0 0.0 1.0
+actor AtorCapsulaTeste capsule super_capsula 2.0 4.0 1.5 pose 15.0 0.0 0.0 0.0 0.0 0.0 1.0
 
-body AtorPrimitivoSolto
--10.0 5.0 5.0 0.0 0.0 0.0 1.0
-box caixote 3.0 3.0 3.0 1.0 0.0 0.0 0.0 0.0 0.0 0.0 1.0
+actor AtorPrimitivoSolto box caixote 3.0 3.0 3.0 1.0 pose -10.0 5.0 5.0 0.0 0.0 0.0 1.0
