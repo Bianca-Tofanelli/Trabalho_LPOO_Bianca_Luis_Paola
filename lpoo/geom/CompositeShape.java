@@ -4,9 +4,20 @@ import lpoo.math.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompositeShape extends Shape{
-    private List<Shape> shapes;
-    public CompositeShape ( String name){
+/**
+ *
+ * @author Bianca Tofanelli
+ *         Luis Cardoso
+ *         Paola Vendruscolo 
+ */
+/* A classe pública CompositeShape, guarda as formas colocadas nela, "filha" da classe Shape. 
+ */
+public class CompositeShape extends Shape
+{
+    private List<Shape> shapes; // lista de shapes
+
+    public CompositeShape ( String name)
+    {
         super(name);
         this.shapes = new ArrayList<>();
     }
@@ -52,29 +63,66 @@ public class CompositeShape extends Shape{
         return sumvolume;
     }
     
-    public Bounds3 getBounds(){
-        if (this.shapes.isEmpty()){
+    public Bounds3 getBounds() {
+        if (this.shapes.isEmpty()) {
             return null;
         }
         Bounds3 completeBound = new Bounds3();
+
         for (int i = 0; i < this.shapes.size(); i++) {
-           completeBound.expand(this.shapes.get(i).getBounds());
+            Bounds3 childBounds = this.shapes.get(i).getBounds();
+            if (childBounds == null) continue;
+
+            
+            Vector3 min = childBounds.min();
+            Vector3 max = childBounds.max();
+            Vector3[] vertices = {
+                new Vector3(min.x, min.y, min.z),
+                new Vector3(max.x, min.y, min.z),
+                new Vector3(min.x, max.y, min.z),
+                new Vector3(max.x, max.y, min.z),
+                new Vector3(min.x, min.y, max.z),
+                new Vector3(max.x, min.y, max.z),
+                new Vector3(min.x, max.y, max.z),
+                new Vector3(max.x, max.y, max.z)
+            };
+
+            
+            for (Vector3 vertex : vertices) {
+                Vector3 transformedPoint = this.shapes.get(i).getPose().transformTR(vertex);
+                completeBound.expand(transformedPoint);
+            }
         }
         return completeBound;
     }
-    protected Matrix3 computeLocalInertia(){
-       Matrix3 accumulatorInertia = Matrix3.zero();
-       for (int i = 0; i < this.shapes.size(); i++) {
-        Vector3 distance = this.shapes.get(i).getCenterOfMass().sub(this.center_mass);
-        float distance2 = (distance.x * distance.x) + (distance.y * distance.y) + (distance.z * distance.z);
-        Matrix3 term1 = Matrix3.diagonal(this.shapes.get(i).getMass() * distance2);
-        Matrix3 term2 = Matrix3.outer(distance, this.shapes.get(i).getMass());
-        Matrix3 steiner = term1.add(term2.mul(-1f));
-        Matrix3 inertiaTotalPeca = this.shapes.get(i).getLocalInertia().add(steiner);
-        accumulatorInertia = accumulatorInertia.add(inertiaTotalPeca);
+    protected Matrix3 computeLocalInertia() {
+        Matrix3 accumulatorInertia = Matrix3.zero();
+
+        for (int i = 0; i < this.shapes.size(); i++) {
+            Shape child = this.shapes.get(i);
+            
+            
+            Vector3 pi = child.getPose().transformTR(child.getCenterOfMass());
+            
+           
+            Vector3 distance = pi.sub(this.center_mass);
+            float distance2 = (distance.x * distance.x) + (distance.y * distance.y) + (distance.z * distance.z);
+            
+            
+            Matrix3 term1 = Matrix3.diagonal(child.getMass() * distance2);
+            Matrix3 term2 = Matrix3.outer(distance, child.getMass());
+            Matrix3 steiner = term1.add(term2.mul(-1f));
+            
+            
+            Matrix3 ri = child.getPose().getRotationMatrix();
+            Matrix3 riT = ri.transpose();
+            Matrix3 rotatedInertia = ri.mul(child.getLocalInertia()).mul(riT);
+            
+            Matrix3 inertiaTotalPeca = rotatedInertia.add(steiner);
+            accumulatorInertia = accumulatorInertia.add(inertiaTotalPeca);
+        }
+        return accumulatorInertia;
     }
-    return accumulatorInertia;
-  }
   public List<Shape> getShapes() {
         return this.shapes;
     }

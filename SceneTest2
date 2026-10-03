@@ -1,0 +1,6 @@
+composite CompTeste
+box caixa_base 1.0 1.0 1.0 1.0 pose 0.0 0.0 0.0 0.0 0.0 0.0 1.0
+sphere esfera_topo 1.0 1.0 pose 0.0 3.0 0.0 0.0 0.0 0.0 1.0
+end pose 0.0 0.0 0.0 0.0 0.0 0.0 1.0
+
+actor AtorTeste instance inst_comp CompTeste pose 10.0 0.0 0.0 0.0 0.0 0.0 1.0
