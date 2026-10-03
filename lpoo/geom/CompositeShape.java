@@ -21,6 +21,7 @@ public class CompositeShape extends Shape
         super(name);
         this.shapes = new ArrayList<>();
     }
+
     public void addShape ( Shape shape){
         if (shape == null) {
             return;
@@ -72,8 +73,9 @@ public class CompositeShape extends Shape
 
         for (int i = 0; i < this.shapes.size(); i++) {
             Bounds3 childBounds = this.shapes.get(i).getBounds();
-            if (childBounds == null) continue;
-
+            if (childBounds == null){
+                continue;
+            }
             
             Vector3 min = childBounds.min();
             Vector3 max = childBounds.max();

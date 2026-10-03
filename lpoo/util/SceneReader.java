@@ -32,6 +32,7 @@ public final class SceneReader {
         Map<String, CompositeShape> compositeDictionary = new HashMap<>();
         while(sc.hasNext()) {
             String token = sc.next();
+
             if(token.equals("composite")) {
                 String compositeName = sc.next();
                 CompositeShape composite = new CompositeShape(compositeName);
@@ -99,6 +100,30 @@ public final class SceneReader {
                 }
                 compositeDictionary.put(compositeName, composite);
             }
+
+            else if(token.equals("mesh")) {
+                String meshName = sc.next();
+                String filename = sc.next();
+                float density = sc.nextFloat();
+                Shape meshShape = null;
+                try{
+                    TriangleMesh mesh = ObjReader.read(filename);
+                    meshShape = new Mesh(meshName, density, mesh);
+                }
+                catch(IOException e) {
+                    throw new RuntimeException("Falha ao ler arquivo OBJ: " + filename, e);
+                }
+                Pose meshPose = new Pose();
+                if(sc.hasNext("pose")) {
+                    sc.next();
+                    Vector3 position = readVector3();
+                    Quaternion orientation = readQuaternion();
+                    meshPose = new Pose(position, orientation);
+                }
+                RigidBody body = new RigidBody(meshName, meshPose, meshShape);
+                actors.add(body);
+            }
+
             else if(token.equals("actor")) {
                 String actorName = sc.next();
                 String shapeType = sc.next();
@@ -143,6 +168,7 @@ public final class SceneReader {
                 else {
                     throw new IllegalArgumentException("Tipo de forma de ator desconhecida: " + shapeType);
                 }
+
                 Pose actorPose = new Pose();
                 if(sc.hasNext("pose")) {
                     sc.next();

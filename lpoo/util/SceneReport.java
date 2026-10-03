@@ -15,7 +15,6 @@ public final class SceneReport {
       out.printf("Centro de Massa: %s\n", body.getCenterOfMass());
 
       if (body.getInertia() != null) {
-        // A formatação replace colapsa a matriz 3x3 numa linha única para o relatório ficar mais limpo
         out.printf("Tensor de Inércia: %s\n", body.getInertia().toString().replace("\n", "  "));
       }
 
@@ -39,12 +38,17 @@ public final class SceneReport {
         String indent = indentStack.pop();
         String typeName = currentShape.getClass().getSimpleName();
 
-        out.printf("%s> %s (%s)\n", indent, currentShape.getName(), typeName);
+        out.printf("%s > %s (%s)\n", indent, currentShape.getName(), typeName);
         out.printf("%s  Área: %.3f | Volume: %.3f | Massa: %.3f\n", indent, currentShape.getArea(), currentShape.getVolume(), currentShape.getMass());
         out.printf("%s  Centro de Massa: %s\n", indent, currentShape.getCenterOfMass());
     
         if (currentShape.getLocalInertia() != null) {
           out.printf("%s  Tensor de Inércia: %s\n", indent, currentShape.getLocalInertia().toString().replace("\n", "  "));
+        }
+
+        if (currentShape instanceof Mesh) {
+          Mesh triangleMesh = (Mesh) currentShape;
+          out.printf("%s  Vértices: %d | Triângulos: %d\n", indent, triangleMesh.getVertexCount(), triangleMesh.getTriangleCount());
         }
 
         if (currentShape instanceof CompositeShape) {
