@@ -35,10 +35,11 @@ public class CompositeShape extends Shape
         float sumz = 0;
         this.center_mass = Vector3.NULL;
         for (int i = 0; i < this.shapes.size(); i++) {
-            Vector3 centerfigure = this.shapes.get(i).getCenterOfMass();
-            sumx = sumx + (centerfigure.x * this.shapes.get(i).getMass());
-            sumy = sumy + (centerfigure.y * this.shapes.get(i).getMass());
-            sumz = sumz + (centerfigure.z * this.shapes.get(i).getMass());
+            Vector3 pi = this.shapes.get(i).getPose().transformTR(this.shapes.get(i).getCenterOfMass());
+            
+            sumx = sumx + (pi.x * this.shapes.get(i).getMass());
+            sumy = sumy + (pi.y * this.shapes.get(i).getMass());
+            sumz = sumz + (pi.z * this.shapes.get(i).getMass());
         }
         if (this.mass > 0) {
             float centroX = sumx / this.mass;
