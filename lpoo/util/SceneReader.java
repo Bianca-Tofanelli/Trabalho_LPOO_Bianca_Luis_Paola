@@ -108,7 +108,17 @@ public final class SceneReader {
                 Shape meshShape = null;
                 try{
                     TriangleMesh mesh = ObjReader.read(filename);
-                    meshShape = new Mesh(meshName, density, mesh);
+
+                    Vector3[] vertex = new Vector3[mesh.vertexCount()];
+                    for(int i=0; i<mesh.vertexCount(); i++){
+                        vertex[i] = mesh.vertex(i);
+                    }
+                    Index3[] triangles = new Index3[mesh.triangleCount()];
+                    for(int i=0; i<mesh.triangleCount(); i++){
+                        triangles[i] = mesh.triangle(i);
+                    }
+
+                    meshShape = new Mesh(meshName, density, triangles, vertex);
                 }
                 catch(IOException e) {
                     throw new RuntimeException("Falha ao ler arquivo OBJ: " + filename, e);

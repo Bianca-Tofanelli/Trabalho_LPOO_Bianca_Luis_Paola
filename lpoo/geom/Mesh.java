@@ -138,4 +138,12 @@ public class Mesh extends Shape
         
         return Matrix3.zero(); 
     }
+
+    public int getVertexCount(){
+        return vertex.length;
+    }
+
+    public int getTriangleCount(){
+        return triangles.length;
+    }
 }
