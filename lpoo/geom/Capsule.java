@@ -84,7 +84,7 @@ public class Capsule extends Primitive
         return Matrix3.diagonal(ixx, iyy, ixx);
     }
 
-    // sobrescreve o método da caixa limitante,calculando-a
+    // sobrescreve o método da caixa limitante, calculando-a
     @Override
     public Bounds3 getBounds()
     {
