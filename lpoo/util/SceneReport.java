@@ -62,6 +62,17 @@ public final class SceneReport {
             }
           }
         }
+        else if (currentShape instanceof CompositeShapeInstance) {
+          CompositeShapeInstance instance = (CompositeShapeInstance) currentShape;
+          CompositeShape base = instance.getBase(); 
+          List<Shape> children = base.getShapes();
+          if (children != null) {
+            for (int i = children.size() - 1; i >= 0; i--) {
+              shapeStack.push(children.get(i));
+              indentStack.push(indent + "   ");
+            }
+          }
+        }
       }
       out.println("\n======================================================\n");
     }
