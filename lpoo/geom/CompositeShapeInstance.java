@@ -12,16 +12,13 @@ public class CompositeShapeInstance extends Shape {
         }
         this.base = base;
         this.mass = base.getMass();
-        
     }
 
-    
     @Override
     public Vector3 getCenterOfMass() {
         return this.pose.transformTR(base.getCenterOfMass());
     }
 
-    
     @Override
     public Matrix3 getLocalInertia() {
         Matrix3 i = base.getLocalInertia();
@@ -65,5 +62,9 @@ public class CompositeShapeInstance extends Shape {
 
     public float getArea() {
         return base.getArea();
+    }
+
+    public CompositeShape getBase() {
+        return this.base;
     }
 }
