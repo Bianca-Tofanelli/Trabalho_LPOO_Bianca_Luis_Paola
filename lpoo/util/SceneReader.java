@@ -28,20 +28,24 @@ public final class SceneReader {
         this.sc = sc;
     }
     private List<RigidBody> readFile() {
-        List<RigidBody> actors = new ArrayList<>();
-        Map<String, CompositeShape> compositeDictionary = new HashMap<>();
-        while(sc.hasNext()) {
+        List<RigidBody> actors = new ArrayList<>(); 
+        Map<String, CompositeShape> compositeDictionary = new HashMap<>(); // cria o dicionário de formas compostas
+        
+        // passa por todo o arquivo .txt
+        while(sc.hasNext()) { 
             String token = sc.next();
-
+            // cria e lê a forma composta e suas filhas
             if(token.equals("composite")) {
                 String compositeName = sc.next();
                 CompositeShape composite = new CompositeShape(compositeName);
                 while(sc.hasNext()) {
                     String childType = sc.next();
-                    if(childType.equals("end")) {
+                    // se ler "end", lê direto a pose da composta
+                    if(childType.equals("end")) { 
                         break;
                     }
                     Shape childShape = null;
+                    // lê as formas filhas da composta e seus parâmetros, depois lê a pose local
                     if(childType.equals("box")) {
                         String name = sc.next();
                         float sx = sc.nextFloat();
@@ -79,9 +83,11 @@ public final class SceneReader {
                         }
                         childShape = new CompositeShapeInstance(instanceName, base);
                     }
+                    // impede o programa de ler um tipo de forma que não exista
                     else {
                         throw new IllegalArgumentException("Tipo de forma base desconhecida: " + childType);
                     }
+                    // lê a pose da forma filha
                     if(sc.hasNext("pose")) {
                         sc.next();
                         Vector3 position = readVector3();
@@ -92,6 +98,7 @@ public final class SceneReader {
                         composite.addShape(childShape);
                     }
                 }
+                // lê a pose global da forma composta
                 if(sc.hasNext("pose")) {
                     sc.next();
                     Vector3 position = readVector3();
@@ -101,13 +108,15 @@ public final class SceneReader {
                 compositeDictionary.put(compositeName, composite);
             }
 
+            // [BÔNUS] lê e cria a malha de triângulos
             else if(token.equals("mesh")) {
                 String meshName = sc.next();
                 String filename = sc.next();
                 float density = sc.nextFloat();
                 Shape meshShape = null;
+                // cria a malha de triângulos ao ler o arquivo .obj, já mandando o Vector e o Index direto para a classe Mesh
                 try{
-                    TriangleMesh mesh = ObjReader.read(filename);
+                    TriangleMesh mesh = ObjReader.read(filename); 
 
                     Vector3[] vertex = new Vector3[mesh.vertexCount()];
                     for(int i=0; i<mesh.vertexCount(); i++){
@@ -120,9 +129,10 @@ public final class SceneReader {
 
                     meshShape = new Mesh(meshName, density, triangles, vertex);
                 }
-                catch(IOException e) {
+                catch(IOException e) { // avisa se não conseguir ler o arquivo .obj
                     throw new RuntimeException("Falha ao ler arquivo OBJ: " + filename, e);
                 }
+                // lê a pose da malha
                 Pose meshPose = new Pose();
                 if(sc.hasNext("pose")) {
                     sc.next();
@@ -130,19 +140,30 @@ public final class SceneReader {
                     Quaternion orientation = readQuaternion();
                     meshPose = new Pose(position, orientation);
                 }
+
+                // cria o corpo rígido da malha
                 RigidBody body = new RigidBody(meshName, meshPose, meshShape);
                 actors.add(body);
             }
 
+            // lê e cria os atores primitivos, seus parâmetros e suas poses
             else if(token.equals("actor")) {
                 String actorName = sc.next();
+
+                Pose actorPose = new Pose(); 
+                if(sc.hasNext("pose")) {
+                    sc.next();
+                    Vector3 position = readVector3();
+                    Quaternion orientation = readQuaternion();
+                    actorPose = new Pose(position, orientation);
+                }
+
                 String shapeType = sc.next();
                 Shape shape = null;
+
                 if(shapeType.equals("box")) {
                     String name = sc.next();
-                    float sx = sc.nextFloat();
-                    float sy = sc.nextFloat();
-                    float sz = sc.nextFloat();
+                    float sx = sc.nextFloat(), sy = sc.nextFloat(), sz = sc.nextFloat();
                     float density = sc.nextFloat();
                     shape = new Box(name, density, sx, sy, sz);
                 } 
@@ -170,22 +191,24 @@ public final class SceneReader {
                     String instanceName = sc.next(); 
                     String baseName = sc.next();
                     CompositeShape base = compositeDictionary.get(baseName);
+                    
                     if (base == null) {
                         throw new IllegalArgumentException("Forma composta não encontrada no dicionário: " + baseName);
                     }
                     shape = new CompositeShapeInstance(instanceName, base);
                 }
-                else {
+                // impede o programa de ler um tipo de forma que não exista
+               else {
                     throw new IllegalArgumentException("Tipo de forma de ator desconhecida: " + shapeType);
                 }
-
-                Pose actorPose = new Pose();
                 if(sc.hasNext("pose")) {
                     sc.next();
                     Vector3 position = readVector3();
                     Quaternion orientation = readQuaternion();
-                    actorPose = new Pose(position, orientation);
+                    shape.setPose(new Pose(position, orientation));
                 }
+
+                // cria o corpo rígido da dos atores
                 RigidBody body = new RigidBody(actorName, actorPose, shape);
                 actors.add(body);
             }
