@@ -18,7 +18,7 @@ public class CompositeShapeInstance extends Shape {
         super(name);
 
         if (base == null) {
-            throw new IllegalArgumentException("A forma base não pode ser nula.");
+            throw new IllegalArgumentException("The base form cannot be null");
         }
 
         this.base = base;
@@ -66,7 +66,7 @@ public class CompositeShapeInstance extends Shape {
             Vector3 transformedPoint = this.pose.transformTR(vertices[i]);
             worldBounds.expand(transformedPoint);
         }
-        
+
         return worldBounds;
     }
 

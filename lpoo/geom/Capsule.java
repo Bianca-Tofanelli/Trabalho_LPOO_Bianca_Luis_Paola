@@ -20,7 +20,7 @@ public class Capsule extends Primitive {
 
         // impede que o raio e a altura sejam nulos ou negativos
         if (radius <= 0 || halfHeight <= 0) {
-            throw new IllegalArgumentException("radius and height must be an positive non-zero number");
+            throw new IllegalArgumentException("Radius and height must be an positive non-zero number");
         }
 
         this.radius = radius;

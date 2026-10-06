@@ -17,8 +17,8 @@ public class Main {
     public static void main(String[] args) {
         // vê se o caminho do arquivo foi fornecido
         if (args.length == 0) {
-            System.out.println("Erro: Forneça o nome do arquivo de cena como argumento.");
-            System.out.println("Uso: java lpoo.Main <caminho_do_arquivo.txt>");
+            System.out.println("Error: Provide the scene file name as an argument");
+            System.out.println("Use: java lpoo.Main <caminho_do_arquivo.txt>");
             return;
         }
 
@@ -35,11 +35,11 @@ public class Main {
                 SceneReport.write(cena.getActors(), writer);
             }
 
-            System.out.println("Sucesso! Relatório gerado em: " + arquivoSaida);
+            System.out.println("Success! Report generated on: " + arquivoSaida);
 
         } catch (Exception e) {
             // exibe se houver algum erro
-            System.out.println("Ocorreu um erro durante a execução:");
+            System.out.println("An error occurred during execution:");
             e.printStackTrace();
         }
 

@@ -27,12 +27,12 @@ public class Mesh extends Shape {
 
         // verifica se existem triangulos no programa , imprimindo mensagem de erro em caso falho
         if (triangles == null || triangles.length == 0) {
-            throw new IllegalArgumentException("The triangle count must be a positive non-zero number.");
+            throw new IllegalArgumentException("The triangle count must be a positive non-zero number");
         }
 
         // verifica se existem vertices no programa , imprimindo mensagem de erro no em caso falho
         if (vertex == null || vertex.length == 0) {
-            throw new IllegalArgumentException("The mesh must have at least one vertex.");
+            throw new IllegalArgumentException("The mesh must have at least one vertex");
         }
 
         // atribui os valores recebidos pela declaracao aos componentes da malha

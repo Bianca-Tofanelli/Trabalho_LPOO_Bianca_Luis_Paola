@@ -16,7 +16,7 @@ public class Scene {
     // inicializa a cena
     public Scene (String name) {
         if (name == null){
-            throw new IllegalArgumentException("O nome não pode ser nulo.");
+            throw new IllegalArgumentException("The name cannot be null");
         }
 
         this.name = name;
@@ -26,7 +26,7 @@ public class Scene {
     // adiciona um corpo rígido, ator, na cena
     public void addActor (RigidBody actor) {
        if (actor == null) {
-            throw new IllegalArgumentException("O ator não pode ser nulo.");
+            throw new IllegalArgumentException("The actor cannot be null.");
         }
 
         this.actors.add(actor);

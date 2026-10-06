@@ -19,9 +19,9 @@ public class Box extends Primitive {
 
         // impede a criação de caixas com dimensões com valor nulo ou abaixo de 0
         if (sx <= 0 || sy <= 0 || sz <= 0) {
-            throw new IllegalArgumentException("As dimensões devem ter valores maiores que zero.");
+            throw new IllegalArgumentException("The dimensions must have values ​​greater than zero");
         }
-        
+
         this.sx = sx;
         this.sy = sy;
         this.sz = sz;

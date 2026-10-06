@@ -17,7 +17,7 @@ public class Sphere extends Primitive {
         super(name, density);
 
         if (radius <= 0) {
-            throw new IllegalArgumentException("radius must be an positive non-zero number");
+            throw new IllegalArgumentException("Radius must be an positive non-zero number");
         }
 
         this.radius = radius;

@@ -18,7 +18,7 @@ public class RigidBody {
     // inicializa o corpo rígido
     public RigidBody(String name, Pose pose, Shape shape){
         if (shape == null){
-            throw new IllegalArgumentException("A forma do corpo rígido não pode ser nula.");
+            throw new IllegalArgumentException("The shape of the rigid body cannot be null");
         }
 
         this.name = name;

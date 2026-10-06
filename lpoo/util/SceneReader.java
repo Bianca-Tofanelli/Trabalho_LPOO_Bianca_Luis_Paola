@@ -100,7 +100,7 @@ public final class SceneReader {
                         CompositeShape base = compositeDictionary.get(baseName);
 
                         if (base == null) {
-                            throw new IllegalArgumentException("Forma composta não encontrada no dicionário: " + baseName);
+                            throw new IllegalArgumentException("Compound form not found in the dictionary: " + baseName);
                         }
 
                         childShape = new CompositeShapeInstance(instanceName, base);
@@ -108,7 +108,7 @@ public final class SceneReader {
 
                     // impede o programa de ler um tipo de forma que não exista
                     else {
-                        throw new IllegalArgumentException("Tipo de forma base desconhecida: " + childType);
+                        throw new IllegalArgumentException("Unknown base shape type: " + childType);
                     }
 
                     // lê a pose da forma filha
@@ -161,7 +161,7 @@ public final class SceneReader {
                     meshShape = new Mesh(meshName, density, triangles, vertex);
                 }
                 catch(IOException e) { // avisa se não conseguir ler o arquivo .obj
-                    throw new RuntimeException("Falha ao ler arquivo OBJ: " + filename, e);
+                    throw new RuntimeException("Failed to read OBJ file: " + filename, e);
                 }
                 // lê a pose da malha
                 Pose meshPose = new Pose();
@@ -229,7 +229,7 @@ public final class SceneReader {
                     CompositeShape base = compositeDictionary.get(baseName);
                     
                     if (base == null) {
-                        throw new IllegalArgumentException("Forma composta não encontrada no dicionário: " + baseName);
+                        throw new IllegalArgumentException("Compound form not found in the dictionary: " + baseName);
                     }
 
                     shape = new CompositeShapeInstance(instanceName, base);
@@ -237,7 +237,7 @@ public final class SceneReader {
 
                 // impede o programa de ler um tipo de forma que não exista
                else {
-                    throw new IllegalArgumentException("Tipo de forma de ator desconhecida: " + shapeType);
+                    throw new IllegalArgumentException("Unknown actor shape type: " + shapeType);
                 }
 
                 if(sc.hasNext("pose")) {

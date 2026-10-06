@@ -19,7 +19,7 @@ public class Cylinder extends Primitive {
         super(name, density);
 
         if (radius <= 0 || halfHeight <= 0) {
-            throw new IllegalArgumentException("radius and height must be an positive non-zero number");
+            throw new IllegalArgumentException("Radius and height must be an positive non-zero number");
         }
 
         this.radius = radius;
