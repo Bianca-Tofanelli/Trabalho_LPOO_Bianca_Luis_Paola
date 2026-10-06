@@ -40,6 +40,6 @@ Certifique-se de ter o **Java JDK** instalado em sua máquina.
 Abra o terminal na raiz do projeto onde se encontram as pastas dos pacotes (`lpoo/`) e execute o comando de compilação para todos os arquivos `.java`:
 
 ```bash
-javac lpoo/**/*.java lpoo/*.java
+javac lpoo/*.java
 
 java lpoo.Main SceneTest.txt
