@@ -2,9 +2,12 @@ package lpoo.phyx;
 
 import lpoo.geom.*;
 import lpoo.math.*;
+
 /**
  *
- * @author insert your name here
+ * @author Bianca Tofanelli
+ *         Luis Cardoso
+ *         Paola Vendruscolo 
  */
 public class RigidBody{
     private String name;

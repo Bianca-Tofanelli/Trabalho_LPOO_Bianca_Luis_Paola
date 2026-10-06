@@ -1,6 +1,12 @@
 package lpoo.geom;
 import lpoo.math.*;
 
+/**
+ *
+ * @author Bianca Tofanelli
+ *         Luis Cardoso
+ *         Paola Vendruscolo 
+ */
 public abstract class Shape{
     protected String name;
     protected Pose pose;

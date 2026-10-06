@@ -1,7 +1,12 @@
 package lpoo.geom;
 import lpoo.math.*;
 
-
+/**
+ *
+ * @author Bianca Tofanelli
+ *         Luis Cardoso
+ *         Paola Vendruscolo 
+ */
 public class Pose {
     private Vector3 position;
     private Quaternion orientation;

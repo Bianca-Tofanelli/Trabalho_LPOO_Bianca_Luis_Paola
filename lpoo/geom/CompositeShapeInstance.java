@@ -2,6 +2,12 @@ package lpoo.geom;
 
 import lpoo.math.*;
 
+/**
+ *
+ * @author Bianca Tofanelli
+ *         Luis Cardoso
+ *         Paola Vendruscolo 
+ */
 public class CompositeShapeInstance extends Shape {
     private final CompositeShape base;
 

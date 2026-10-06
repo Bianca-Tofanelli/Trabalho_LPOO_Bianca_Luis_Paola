@@ -2,6 +2,12 @@ package lpoo.geom;
 
 import lpoo.math.*;
 
+/**
+ *
+ * @author Bianca Tofanelli
+ *         Luis Cardoso
+ *         Paola Vendruscolo 
+ */
 public class Mesh extends Shape {
     protected float density;
     private Index3[] triangles;

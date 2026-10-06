@@ -5,6 +5,12 @@ import lpoo.phyx.*;
 import java.io.*;
 import java.util.*;
 
+/**
+ *
+ * @author Bianca Tofanelli
+ *         Luis Cardoso
+ *         Paola Vendruscolo 
+ */
 public final class SceneReport {
   
   public static void write(List<RigidBody> bodies, PrintWriter out) {

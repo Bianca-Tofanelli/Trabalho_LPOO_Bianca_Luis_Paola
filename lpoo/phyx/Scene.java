@@ -2,6 +2,12 @@ package lpoo.phyx;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ * @author Bianca Tofanelli
+ *         Luis Cardoso
+ *         Paola Vendruscolo 
+ */
 public class Scene {
     private String name;
     private List<RigidBody> actors;

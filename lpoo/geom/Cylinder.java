@@ -2,6 +2,12 @@ package lpoo.geom;
 
 import lpoo.math.*;
 
+/**
+ *
+ * @author Bianca Tofanelli
+ *         Luis Cardoso
+ *         Paola Vendruscolo 
+ */
 public class Cylinder extends Primitive
 {
     private float radius;

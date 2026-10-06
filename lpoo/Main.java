@@ -6,6 +6,12 @@ import lpoo.util.SceneReport;
 import java.io.FileWriter;
 import java.io.PrintWriter;
 
+/**
+ *
+ * @author Bianca Tofanelli
+ *         Luis Cardoso
+ *         Paola Vendruscolo 
+ */
 public class Main {
     public static void main(String[] args) {
         if (args.length == 0) {
