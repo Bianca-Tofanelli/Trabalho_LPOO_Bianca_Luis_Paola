@@ -16,13 +16,14 @@ public class CompositeShape extends Shape
 {
     private List<Shape> shapes; // lista de shapes
 
-    public CompositeShape ( String name)
-    {
+    // inicializa a forma composta
+    public CompositeShape ( String name) {
         super(name);
         this.shapes = new ArrayList<>();
     }
 
-    public void addShape ( Shape shape){
+    // adiciona uma nova forma, recalculando a massa e o centro de massa
+    public void addShape ( Shape shape) {
         if (shape == null) {
             return;
         }
@@ -50,14 +51,18 @@ public class CompositeShape extends Shape
         }
         this.local_inertia = computeLocalInertia();
     }  
-    public float getArea(){ 
+
+    // calcula a área superficial
+    public float getArea() { 
         float sumarea = 0;
         for (int i = 0; i < this.shapes.size(); i++) {
             sumarea = sumarea + this.shapes.get(i).getArea();
         }
         return sumarea;
     }
-    public float getVolume(){ 
+
+    // calcula o volume total
+    public float getVolume() { 
         float sumvolume = 0;
         for (int i = 0; i < this.shapes.size(); i++) {
             sumvolume = sumvolume + this.shapes.get(i).getVolume();
@@ -65,6 +70,7 @@ public class CompositeShape extends Shape
         return sumvolume;
     }
     
+    // determina a caixa limitante com o vértice de todas as "filhas"
     public Bounds3 getBounds() {
         if (this.shapes.isEmpty()) {
             return null;
@@ -73,7 +79,8 @@ public class CompositeShape extends Shape
 
         for (int i = 0; i < this.shapes.size(); i++) {
             Bounds3 childBounds = this.shapes.get(i).getBounds();
-            if (childBounds == null){
+
+            if (childBounds == null) {
                 continue;
             }
             
@@ -90,43 +97,38 @@ public class CompositeShape extends Shape
                 new Vector3(max.x, max.y, max.z)
             };
 
-            
             for (Vector3 vertex : vertices) {
-                Vector3 transformedPoint = this.shapes.get(i).getPose().transformTR(vertex);
-                completeBound.expand(transformedPoint);
+                    Vector3 transformedPoint = this.shapes.get(i).getPose().transformTR(vertex);
+                    completeBound.expand(transformedPoint);
             }
         }
         return completeBound;
     }
+
+    // calcula o tensor de inércia
     protected Matrix3 computeLocalInertia() {
         Matrix3 accumulatorInertia = Matrix3.zero();
 
         for (int i = 0; i < this.shapes.size(); i++) {
-            Shape child = this.shapes.get(i);
-            
-            
-            Vector3 pi = child.getPose().transformTR(child.getCenterOfMass());
-            
-           
-            Vector3 distance = pi.sub(this.center_mass);
-            float distance2 = (distance.x * distance.x) + (distance.y * distance.y) + (distance.z * distance.z);
-            
-            
-            Matrix3 term1 = Matrix3.diagonal(child.getMass() * distance2);
-            Matrix3 term2 = Matrix3.outer(distance, child.getMass());
-            Matrix3 steiner = term1.add(term2.mul(-1f));
-            
-            
-            Matrix3 ri = child.getPose().getRotationMatrix();
-            Matrix3 riT = ri.transpose();
-            Matrix3 rotatedInertia = ri.mul(child.getLocalInertia()).mul(riT);
-            
-            Matrix3 inertiaTotalPeca = rotatedInertia.add(steiner);
-            accumulatorInertia = accumulatorInertia.add(inertiaTotalPeca);
+                Shape child = this.shapes.get(i);
+                Vector3 pi = child.getPose().transformTR(child.getCenterOfMass());
+                Vector3 distance = pi.sub(this.center_mass);
+                float distance2 = (distance.x * distance.x) + (distance.y * distance.y) + (distance.z * distance.z);
+                Matrix3 term1 = Matrix3.diagonal(child.getMass() * distance2);
+                Matrix3 term2 = Matrix3.outer(distance, child.getMass());
+                Matrix3 steiner = term1.add(term2.mul(-1f));
+                Matrix3 ri = child.getPose().getRotationMatrix();
+                Matrix3 riT = ri.transpose();
+                Matrix3 rotatedInertia = ri.mul(child.getLocalInertia()).mul(riT);
+                Matrix3 inertiaTotalPeca = rotatedInertia.add(steiner);
+                accumulatorInertia = accumulatorInertia.add(inertiaTotalPeca);
+            }
+
+            return accumulatorInertia;
         }
-        return accumulatorInertia;
-    }
-  public List<Shape> getShapes() {
-        return this.shapes;
-    }
-}  
+
+        // pega a coleção de formas
+        public List<Shape> getShapes() {
+            return this.shapes;
+        }
+    } // CompositeShape

@@ -8,67 +8,94 @@ import lpoo.math.*;
  *         Luis Cardoso
  *         Paola Vendruscolo 
  */
+
+// A classe publica "Mesh" representa a malha de triangulos , "filha" da classe Shape
 public class Mesh extends Shape {
+    // declara os valores pertinentes a composicao da malha
     protected float density;
     private Index3[] triangles;
     private Vector3[] vertex;
 
+    // inicia a malha , recebendo seus componentes fundamentais junto com seu nome
     public Mesh(String name, float density, Index3[] triangles, Vector3[] vertex) {
+        // recebe o nome herdado de shape
         super(name);
 
-        if (density <= 0)
-            throw new IllegalArgumentException("The density must be a positive non-zero number");
-        
-        if (triangles == null || triangles.length <= 0)
-            throw new IllegalArgumentException("The triangle count must be a positive non-zero number.");
-        
-        if (vertex == null || vertex.length == 0)
-            throw new IllegalArgumentException("The mesh must have at least one vertex.");
+        // verifica se a densidade e um numero natural, imprimindo mensagem de erro em caso falho
+        if (density < 0) {
+            throw new IllegalArgumentException("The density must be a positive number");
+        }
 
+        // verifica se existem triangulos no programa , imprimindo mensagem de erro em caso falho
+        if (triangles == null || triangles.length == 0) {
+            throw new IllegalArgumentException("The triangle count must be a positive non-zero number.");
+        }
+
+        // verifica se existem vertices no programa , imprimindo mensagem de erro no em caso falho
+        if (vertex == null || vertex.length == 0) {
+            throw new IllegalArgumentException("The mesh must have at least one vertex.");
+        }
+
+        // atribui os valores recebidos pela declaracao aos componentes da malha
         this.triangles = triangles;
         this.vertex = vertex;
         this.density = density;
 
-        float totalSignedVolume = 0;
+        // declara os valores representantes do volume e coordenadas do centro da malha
+        float MeshVolume = 0;
         float sumCenterX = 0;
         float sumCenterY = 0;
         float sumCenterZ = 0;
 
+        // calcula o volume e centro de massa da malha por meio da soma de decomposicao em tetraedros 
         for (int t = 0; t < triangles.length; t++) {
+            // determina os valores do triangulo a ser trabalhado
             Index3 x = triangles[t];
             Vector3 a = vertex[x.i];
             Vector3 b = vertex[x.j];
             Vector3 c = vertex[x.k];
 
-            float v_tetra = tetrahedronVolume(a, b, c);
+            // realiza o calculo de volume do tetraedro
+            float v_tetra = tetrahedronVolume(a, b, c); 
             
+            // determina as coordenadas do centro de massa do tetraedro
             float cx = (a.x + b.x + c.x) / 4.0f;
             float cy = (a.y + b.y + c.y) / 4.0f;
             float cz = (a.z + b.z + c.z) / 4.0f;
 
+            // determina as componentes dos eixos da malha pela soma dos componentes dos tetraedros
             sumCenterX += cx * v_tetra;
             sumCenterY += cy * v_tetra;
             sumCenterZ += cz * v_tetra;
             
-            totalSignedVolume += v_tetra;
+            // determina o volume da malha por meio da soma do volume dos tetraedros
+            MeshVolume += v_tetra;
         }
 
-        float finalVolume = Math.abs(totalSignedVolume);
-        this.mass = this.density * finalVolume;
+        // determina o volume absoluto do volume
+        float AbsoluteMeshVolume = Math.abs(MeshVolume);
 
-        if (finalVolume > 0) {
+        // calcula a massa da malha
+        this.mass = this.density * AbsoluteMeshVolume;
+
+        // caso o volume nao seja nulo , realiza o calculo das coordenadas de seu centro de massa
+        if (AbsoluteMeshVolume > 0) {
             this.center_mass = new Vector3(
-                sumCenterX / totalSignedVolume, 
-                sumCenterY / totalSignedVolume, 
-                sumCenterZ / totalSignedVolume
-            );
-        } else {
+                sumCenterX / MeshVolume, 
+                sumCenterY / MeshVolume, 
+                sumCenterZ / MeshVolume
+            ); 
+        }
+        // caso o volume seja nulo, o centro de massa tambem sera
+        else {
             this.center_mass = new Vector3(0, 0, 0);
         }
        
+        // realiza o calculo do tensor de inercia da malha
         this.local_inertia = computeLocalInertia();
     }
 
+    // realiza o calculo da area de um triangulo por meio de suas coordenadas
     public float triangleArea(Vector3 a, Vector3 b, Vector3 c) {
         Vector3 u = b.sub(a);
         Vector3 v = c.sub(a);
@@ -78,6 +105,7 @@ public class Mesh extends Shape {
         return 0.5f * (float)Math.sqrt(Math.max(0.0f, w));
     }
 
+    // sobrescreve o metodo de calculo de area global com o local
     @Override
     public float getArea() {
         float sum = 0;
@@ -88,11 +116,13 @@ public class Mesh extends Shape {
         return sum;
     }
 
+    // realiza o calculo do volume de um tetraedro por meio de tres de suas coordenadas , sendo assumido a quarta em (0,0,0)
     public float tetrahedronVolume(Vector3 a, Vector3 b, Vector3 c) {
         float det = a.x * (b.y * c.z - b.z * c.y) - a.y * (b.x * c.z - b.z * c.x) + a.z * (b.x * c.y - b.y * c.x);
         return (det / 6.0f);
     }
 
+    // sobrescreve o metodo de calculo de volume global com o local
     @Override
     public float getVolume() {
         if (this.density > 0) {
@@ -101,6 +131,7 @@ public class Mesh extends Shape {
         return 0;
     }
 
+    // retorna o ponto minimo da caixa limitante
     public Vector3 boundsMin() {
         Vector3 p = vertex[0];
         for (int i = 1; i < vertex.length; i++) {
@@ -109,6 +140,7 @@ public class Mesh extends Shape {
         return p;
     }
 
+    // retorna o ponto maximo da caixa limitante
     public Vector3 boundsMax() {
         Vector3 p = vertex[0];
         for (int i = 1; i < vertex.length; i++) {
@@ -117,12 +149,13 @@ public class Mesh extends Shape {
         return p;
     }
 
+    // determina a caixa limitante por meio de seus pontos maximo e minimos
     @Override
     public Bounds3 getBounds() {
         return new Bounds3(boundsMin(), boundsMax());
     }
 
-   
+   // realiza o calculo do tensor de inercia da malha
     protected Matrix3 computeLocalInertia() {
         float Ixx = 0, Iyy = 0, Izz = 0;
         float Ixy = 0, Ixz = 0, Iyz = 0;
@@ -177,10 +210,12 @@ public class Mesh extends Shape {
         return diag.add(mXy).add(mXz).add(mYz);
     }
 
+    // retorna a quantidade de vertices na malha
     public int getVertexCount() {
         return vertex.length;
     }
 
+    // retorna a quantidade de triangulos na malha
     public int getTriangleCount() {
         return triangles.length;
     }

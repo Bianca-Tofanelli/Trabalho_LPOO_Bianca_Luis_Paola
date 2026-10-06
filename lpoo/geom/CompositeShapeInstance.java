@@ -8,9 +8,12 @@ import lpoo.math.*;
  *         Luis Cardoso
  *         Paola Vendruscolo 
  */
+/*  Classe pública de instância de uma forma composta, "filha" de shape, usada para que se consiga reutilizar a geometria sem duplicar os dados armazenados 
+*/
 public class CompositeShapeInstance extends Shape {
-    private final CompositeShape base;
+    private final CompositeShape base; // referência para a forma composta original
 
+    // inicializa a instância
     public CompositeShapeInstance(String name, CompositeShape base) {
         super(name);
         if (base == null) {
@@ -20,11 +23,13 @@ public class CompositeShapeInstance extends Shape {
         this.mass = base.getMass();
     }
 
+    // calcula o centro de massa
     @Override
     public Vector3 getCenterOfMass() {
         return this.pose.transformTR(base.getCenterOfMass());
     }
 
+    // calcula o tensor de inércia novo
     @Override
     public Matrix3 getLocalInertia() {
         Matrix3 i = base.getLocalInertia();
@@ -33,6 +38,7 @@ public class CompositeShapeInstance extends Shape {
         return r.mul(i).mul(rT);
     }
 
+    // calcula a caixa limitante 
     public Bounds3 getBounds() {
         Bounds3 localBounds = base.getBounds();
         if (localBounds == null) {
@@ -58,19 +64,23 @@ public class CompositeShapeInstance extends Shape {
         return worldBounds;
     }
 
+    // pega a massa
     public float getMass() {
         return base.getMass();
     }
 
+    // pega o volume
     public float getVolume() {
         return base.getVolume();
     }
 
+    // pega a área superficial
     public float getArea() {
         return base.getArea();
     }
 
+    // pega o protótipo original
     public CompositeShape getBase() {
         return this.base;
     }
-}
+} // CompositeShapeInstance
