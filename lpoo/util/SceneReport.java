@@ -44,7 +44,6 @@ public final class SceneReport {
 
       // pilha para percorrer as formas e instâncias 
       while (!shapeStack.isEmpty()) {
-      while (!shapeStack.isEmpty()) {
         Shape currentShape = shapeStack.pop();
         String indent = indentStack.pop();
         String typeName = currentShape.getClass().getSimpleName();
@@ -99,4 +98,4 @@ public final class SceneReport {
     out.flush();
   }
 }
-} // SceneReport
+// SceneReport
