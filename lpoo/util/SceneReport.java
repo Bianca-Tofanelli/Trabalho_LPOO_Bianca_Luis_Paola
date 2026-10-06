@@ -11,8 +11,11 @@ import java.util.*;
  *         Luis Cardoso
  *         Paola Vendruscolo 
  */
+/* Classe pública que gera o relatório das propriedades dos atores da cena
+ */
 public final class SceneReport {
   
+  // percorre a lista de corpos rígidos e imprime suas características
   public static void write(List<RigidBody> bodies, PrintWriter out) {
     for (RigidBody body : bodies) {
       out.printf("Ator: %s\n", body.getName());
@@ -39,6 +42,8 @@ public final class SceneReport {
         indentStack.push("");
       }
 
+      // pilha para percorrer as formas e instâncias 
+      while (!shapeStack.isEmpty()) {
       while (!shapeStack.isEmpty()) {
         Shape currentShape = shapeStack.pop();
         String indent = indentStack.pop();
@@ -52,11 +57,13 @@ public final class SceneReport {
           out.printf("%s  Tensor de Inércia: %s\n", indent, currentShape.getLocalInertia().toString().replace("\n", "  "));
         }
 
+        // se for uma malha, imprime informações dos vértices e triângulos
         if (currentShape instanceof Mesh) {
           Mesh triangleMesh = (Mesh) currentShape;
           out.printf("%s  Vértices: %d | Triângulos: %d\n", indent, triangleMesh.getVertexCount(), triangleMesh.getTriangleCount());
         }
 
+        // se for uma forma composta, empilha as filhas 
         if (currentShape instanceof CompositeShape) {
           CompositeShape comp = (CompositeShape) currentShape;
           List<Shape> children = comp.getShapes();
@@ -68,6 +75,8 @@ public final class SceneReport {
             }
           }
         }
+
+        // se for uma instância de forma composta, desempilha 
         else if (currentShape instanceof CompositeShapeInstance) {
           CompositeShapeInstance instance = (CompositeShapeInstance) currentShape;
           CompositeShape base = instance.getBase(); 
@@ -85,3 +94,4 @@ public final class SceneReport {
     out.flush();
   }
 }
+} // SceneReport

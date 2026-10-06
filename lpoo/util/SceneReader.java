@@ -12,6 +12,8 @@ import java.util.*;
  *         Luis Cardoso
  *         Paola Vendruscolo 
  */
+/* Classe pública que lê o arquivo da cena, txt, e contrói a hierarquia dos corpos rígidos
+ */
 public final class SceneReader {
     
     public static Scene readScene(String filePath) throws FileNotFoundException {
@@ -234,4 +236,4 @@ public final class SceneReader {
         float w = sc.nextFloat();
         return new Quaternion(x, y, z, w);
     }
-}
+} // SceneReader

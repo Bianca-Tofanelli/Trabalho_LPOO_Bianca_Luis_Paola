@@ -1,5 +1,4 @@
 import lpoo.geom.*;
-import lpoo.math.*;
 import lpoo.util.*;
 import java.io.*;
 

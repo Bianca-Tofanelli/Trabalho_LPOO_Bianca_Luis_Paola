@@ -1,21 +1,21 @@
-composite SubBase
-box caixa_base 2.0 2.0 2.0 1.0 pose 0.0 0.0 0.0 0.0 0.0 0.0 1.0
-sphere esfera_topo 2.0 1.0 pose 0.0 2.0 0.0 0.0 0.0 0.0 1.0
+composite Base
+box caixa 2.0 2.0 2.0 1.0 pose 0.0 0.0 0.0 0.0 0.0 0.0 1.0
+sphere esfera 2.0 1.0 pose 0.0 2.0 0.0 0.0 0.0 0.0 1.0
 end pose 0.0 0.0 0.0 0.0 0.0 0.0 1.0
 
 composite Foguete
-cylinder corpo_foguete 3.0 5.0 1.5 pose 0.0 -5.0 0.0 0.0 0.0 0.0 1.0
-instance inst_SubBase SubBase pose 0.0 2.0 0.0 0.0 0.0 0.0 1.0
+cylinder corpo 3.0 5.0 1.5 pose 0.0 -5.0 0.0 0.0 0.0 0.0 1.0
+instance inst_Base Base pose 0.0 2.0 0.0 0.0 0.0 0.0 1.0
 end pose 0.0 0.0 0.0 0.0 0.0 0.0 1.0
 
-actor AtorFoguete pose 10.0 0.0 0.0 0.0 0.0 0.0 1.0 instance meu_foguete Foguete pose 0.0 5.0 0.0 0.0 0.0 0.0 1.0
+actor AtorFoguete pose 10.0 0.0 0.0 0.0 0.0 0.0 1.0 instance foguete Foguete pose 0.0 5.0 0.0 0.0 0.0 0.0 1.0
 
-actor AtorCapsula pose -15.0 0.0 0.0 0.0 0.0 0.0 1.0 capsule super_capsula 2.0 4.0 1.5 pose 0.0 -2.0 0.0 0.0 0.0 0.0 1.0
+actor AtorCapsula pose -15.0 0.0 0.0 0.0 0.0 0.0 1.0 capsule capsula 2.0 4.0 1.5 pose 0.0 -2.0 0.0 0.0 0.0 0.0 1.0
 
-actor AtorCaixaSolta pose 5.0 5.0 5.0 0.0 0.0 0.0 1.0 box caixote 3.0 3.0 3.0 1.0 pose 0.0 2.0 0.0 0.0 0.0 0.0 1.0
+actor AtorCaixa pose 5.0 5.0 5.0 0.0 0.0 0.0 1.0 box caixa 3.0 3.0 3.0 1.0 pose 0.0 2.0 0.0 0.0 0.0 0.0 1.0
 
-actor AtorEsferaSolta pose 0.0 10.0 0.0 0.0 0.0 0.0 1.0 sphere bolota 2.5 1.0 pose 0.0 0.0 0.0 0.0 0.0 0.0 1.0
+actor AtorEsfera pose 0.0 10.0 0.0 0.0 0.0 0.0 1.0 sphere esfera 2.5 1.0 pose 0.0 0.0 0.0 0.0 0.0 0.0 1.0
 
-actor AtorCilindroSolto pose 0.0 -10.0 0.0 0.0 0.0 0.0 1.0 cylinder tambor 2.0 3.0 1.0 pose 0.0 0.0 0.0 0.0 0.0 0.0 1.0
+actor AtorCilindro pose 0.0 -10.0 0.0 0.0 0.0 0.0 1.0 cylinder cilindro 2.0 3.0 1.0 pose 0.0 0.0 0.0 0.0 0.0 0.0 1.0
 
 mesh ator_f16 f-16.obj 1.0 pose 20.0 10.0 0.0 0.0 0.0 0.0 1.0
