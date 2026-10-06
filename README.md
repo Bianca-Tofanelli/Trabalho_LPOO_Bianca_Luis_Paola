@@ -6,5 +6,7 @@ Itens entregues: implementação das formas primitivas, sistema de translação 
 
 Como compilar e executar, com o Java JDK instalado na máquina.
 No terminal onde o projeto se encontra. 
+
 Compilar: javac lpoo/*.java
+
 Executar: java lpoo.Main SceneTest.txt
