@@ -17,10 +17,12 @@ public class Capsule extends Primitive {
     // construtor da Capsule
     public Capsule(String name, float density, float radius, float halfHeight) {
         super(name, density);
+
         // impede que o raio e a altura sejam nulos ou negativos
         if (radius <= 0 || halfHeight <= 0) {
             throw new IllegalArgumentException("radius and height must be an positive non-zero number");
         }
+
         this.radius = radius;
         this.halfHeight = halfHeight;
         updateMassProperties();
@@ -65,12 +67,10 @@ public class Capsule extends Primitive {
     protected Matrix3 computeLocalInertia() {
         float partialCylinderMass = density * getCylinderVolume();
         float partialSphereMass = density * getSphereVolume();
-
         float iyy = 0.5f * partialCylinderMass * radius * radius + 0.4f * partialSphereMass * radius * radius; //inércia em Y do cilindro somada com a inércia em Y da esfera
         float ixxCyl = (partialCylinderMass / 12f) * (3f * radius * radius + 2f * halfHeight * 2f * halfHeight); // inércia base do cilindro, eixos X e Z
         float ixxSph = partialSphereMass * ((2f / 5f) * radius * radius + halfHeight * halfHeight + 0.75f * halfHeight * radius); // inércia das semiesferas deslocadas
         float ixx = ixxCyl + ixxSph;
-        
         return Matrix3.diagonal(ixx, iyy, ixx);
     }
 

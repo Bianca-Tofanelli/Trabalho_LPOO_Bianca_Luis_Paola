@@ -35,11 +35,14 @@ public class Main {
                 // Passa a lista de atores e o escritor para o seu método write
                 SceneReport.write(cena.getActors(), writer);
             }
+
             System.out.println("Sucesso! Relatório gerado em: " + arquivoSaida);
+
         } catch (Exception e) {
             // exibe se houver algum erro
             System.out.println("Ocorreu um erro durante a execução:");
             e.printStackTrace();
         }
+        
     }
 } // Main

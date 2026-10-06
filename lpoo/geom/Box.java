@@ -16,10 +16,12 @@ public class Box extends Primitive {
     // construtor da Box
     public Box(String name, float density, float sx, float sy, float sz) {
         super(name, density);
+
         // impede a criação de caixas com dimensões com valor nulo ou abaixo de 0
         if (sx <= 0 || sy <= 0 || sz <= 0) {
             throw new IllegalArgumentException("As dimensões devem ter valores maiores que zero.");
         }
+        
         this.sx = sx;
         this.sy = sy;
         this.sz = sz;

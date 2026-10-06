@@ -14,9 +14,9 @@ import java.util.*;
 /* Classe pública que gera o relatório das propriedades dos atores da cena
  */
 public final class SceneReport {
-  
   // percorre a lista de corpos rígidos e imprime suas características
   public static void write(List<RigidBody> bodies, PrintWriter out) {
+    
     for (RigidBody body : bodies) {
       out.printf("Ator: %s\n", body.getName());
       out.println("--- Propriedades Globais ---");
@@ -28,6 +28,7 @@ public final class SceneReport {
       }
 
       Bounds3 bounds = body.getBounds();
+
       if (bounds != null) {
         out.printf("Caixa Limitante: Mín %s | Máx %s\n", bounds.min(), bounds.max());
       }
@@ -69,10 +70,12 @@ public final class SceneReport {
           List<Shape> children = comp.getShapes();
 
           if (children != null) {
+
             for (int i = children.size() - 1; i >= 0; i--) {
               shapeStack.push(children.get(i));
               indentStack.push(indent + "   ");
             }
+            
           }
         }
 
@@ -81,11 +84,14 @@ public final class SceneReport {
           CompositeShapeInstance instance = (CompositeShapeInstance) currentShape;
           CompositeShape base = instance.getBase(); 
           List<Shape> children = base.getShapes();
+
           if (children != null) {
+
             for (int i = children.size() - 1; i >= 0; i--) {
               shapeStack.push(children.get(i));
               indentStack.push(indent + "   ");
             }
+
           }
         }
       }

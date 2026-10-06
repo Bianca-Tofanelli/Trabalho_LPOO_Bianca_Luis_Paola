@@ -27,15 +27,19 @@ public class CompositeShape extends Shape
         if (shape == null) {
             return;
         }
+
         this.shapes.add(shape);
         this.mass = 0;
+
         for (int i = 0; i < this.shapes.size(); i++) {
            this.mass = this.mass + this.shapes.get(i).getMass();
         }
+
         float sumx = 0;
         float sumy = 0;
         float sumz = 0;
         this.center_mass = Vector3.NULL;
+
         for (int i = 0; i < this.shapes.size(); i++) {
             Vector3 pi = this.shapes.get(i).getPose().transformTR(this.shapes.get(i).getCenterOfMass());
             
@@ -43,30 +47,36 @@ public class CompositeShape extends Shape
             sumy = sumy + (pi.y * this.shapes.get(i).getMass());
             sumz = sumz + (pi.z * this.shapes.get(i).getMass());
         }
+
         if (this.mass > 0) {
             float centroX = sumx / this.mass;
             float centroY = sumy / this.mass;
             float centroZ = sumz / this.mass;
             this.center_mass = new Vector3(centroX, centroY, centroZ);
         }
+
         this.local_inertia = computeLocalInertia();
     }  
 
     // calcula a área superficial
     public float getArea() { 
         float sumarea = 0;
+
         for (int i = 0; i < this.shapes.size(); i++) {
             sumarea = sumarea + this.shapes.get(i).getArea();
         }
+
         return sumarea;
     }
 
     // calcula o volume total
     public float getVolume() { 
         float sumvolume = 0;
+
         for (int i = 0; i < this.shapes.size(); i++) {
             sumvolume = sumvolume + this.shapes.get(i).getVolume();
         }
+
         return sumvolume;
     }
     
@@ -75,6 +85,7 @@ public class CompositeShape extends Shape
         if (this.shapes.isEmpty()) {
             return null;
         }
+
         Bounds3 completeBound = new Bounds3();
 
         for (int i = 0; i < this.shapes.size(); i++) {
@@ -101,6 +112,7 @@ public class CompositeShape extends Shape
                     Vector3 transformedPoint = this.shapes.get(i).getPose().transformTR(vertex);
                     completeBound.expand(transformedPoint);
             }
+            
         }
         return completeBound;
     }

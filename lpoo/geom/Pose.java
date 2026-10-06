@@ -27,6 +27,7 @@ public class Pose {
         this.orientation = orientation;
         this.rotationMatrix = orientation.toRotationMatrix();
     }    
+    
     // transformação de rotação e translação
     public Vector3 transformTR(Vector3 p) {
         float x = rotationMatrix.get(0,0) * p.x + rotationMatrix.get(0,1) * p.y + rotationMatrix.get(0,2) * p.z;

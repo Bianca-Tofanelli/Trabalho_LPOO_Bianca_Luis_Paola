@@ -9,9 +9,9 @@ import lpoo.math.*;
  *         Luis Cardoso
  *         Paola Vendruscolo 
  */
-/* Classe pública que representa um corpo rígido
- */
-public class RigidBody{
+// Classe pública que representa um corpo rígido
+ 
+public class RigidBody {
     private String name;
     private Pose pose;
     private Shape shape;
@@ -21,12 +21,17 @@ public class RigidBody{
         if (shape == null){
             throw new IllegalArgumentException("A forma do corpo rígido não pode ser nula.");
         }
+
         this.name = name;
+
         if (pose != null){
           this.pose = pose;
-        } else {
+        } 
+        
+        else {
           this.pose = new Pose();
         }
+
         this.shape = shape;
     }
 
@@ -76,9 +81,11 @@ public class RigidBody{
     // calcular a caixa limitante
     public Bounds3 getBounds() {
         Bounds3 localBounds = shape.getBounds();
+
         if (localBounds == null) {
             return null;
         }
+
         Vector3 min = localBounds.min();
         Vector3 max = localBounds.max();
         Vector3[] vertices = {
@@ -92,10 +99,12 @@ public class RigidBody{
             new Vector3(max.x, max.y, max.z)
         };
         Bounds3 globalBounds = new Bounds3();
+
         for (int i = 0; i < vertices.length; i++) {
             Vector3 transformedPoint = pose.transformTR(vertices[i]);
             globalBounds.expand(transformedPoint);
         }
+        
         return globalBounds;
     } 
 } // RigidBody

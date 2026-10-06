@@ -18,8 +18,11 @@ public class Cylinder extends Primitive {
     // inicializa o cilindro
     public Cylinder(String name, float density, float radius, float halfHeight) {
         super(name, density);
-        if (radius <= 0 || halfHeight <= 0)
+
+        if (radius <= 0 || halfHeight <= 0) {
             throw new IllegalArgumentException("radius and height must be an positive non-zero number");
+        }
+
         this.radius = radius;
         this.halfHeight = halfHeight;
         updateMassProperties();

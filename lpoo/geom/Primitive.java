@@ -11,7 +11,6 @@ import lpoo.math.*;
 /* Classe abstrata das formas primitivas
  */
 public abstract class Primitive extends Shape {
-
     protected float density;
 
     // inicializa o primitivo

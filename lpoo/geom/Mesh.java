@@ -109,10 +109,12 @@ public class Mesh extends Shape {
     @Override
     public float getArea() {
         float sum = 0;
+
         for (int t = 0; t < triangles.length; t++) {
             Index3 x = triangles[t];
             sum += triangleArea(vertex[x.i], vertex[x.j], vertex[x.k]);
         }
+
         return sum;
     }
 
@@ -125,27 +127,33 @@ public class Mesh extends Shape {
     // sobrescreve o metodo de calculo de volume global com o local
     @Override
     public float getVolume() {
+
         if (this.density > 0) {
             return this.mass / this.density;
         }
+
         return 0;
     }
 
     // retorna o ponto minimo da caixa limitante
     public Vector3 boundsMin() {
         Vector3 p = vertex[0];
+
         for (int i = 1; i < vertex.length; i++) {
             p = Vector3.min(p, vertex[i]);
         }
+
         return p;
     }
 
     // retorna o ponto maximo da caixa limitante
     public Vector3 boundsMax() {
         Vector3 p = vertex[0];
+
         for (int i = 1; i < vertex.length; i++) {
             p = Vector3.max(p, vertex[i]);
         }
+
         return p;
     }
 
@@ -183,7 +191,7 @@ public class Mesh extends Shape {
             Ixz -= v * exz / 10.0f;
             Iyz -= v * eyz / 10.0f;
         }
-
+        
         Ixx *= this.density;
         Iyy *= this.density;
         Izz *= this.density;

@@ -16,9 +16,11 @@ public class Sphere extends Primitive {
     // inicializa a esfera
     public Sphere(String name, float density, float radius) {
         super(name, density);
+
         if (radius <= 0) {
             throw new IllegalArgumentException("radius must be an positive non-zero number");
         }
+        
         this.radius = radius;
         updateMassProperties();
     }

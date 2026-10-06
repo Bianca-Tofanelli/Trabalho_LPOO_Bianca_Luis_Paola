@@ -16,9 +16,11 @@ public class CompositeShapeInstance extends Shape {
     // inicializa a instância
     public CompositeShapeInstance(String name, CompositeShape base) {
         super(name);
+
         if (base == null) {
             throw new IllegalArgumentException("A forma base não pode ser nula.");
         }
+
         this.base = base;
         this.mass = base.getMass();
     }
@@ -41,9 +43,11 @@ public class CompositeShapeInstance extends Shape {
     // calcula a caixa limitante 
     public Bounds3 getBounds() {
         Bounds3 localBounds = base.getBounds();
+
         if (localBounds == null) {
             return null;
         }
+
         Vector3 min = localBounds.min();
         Vector3 max = localBounds.max();
         Vector3[] vertices = {
@@ -57,10 +61,12 @@ public class CompositeShapeInstance extends Shape {
             new Vector3(max.x, max.y, max.z)
         };
         Bounds3 worldBounds = new Bounds3();
+
         for (int i = 0; i < vertices.length; i++) {
             Vector3 transformedPoint = this.pose.transformTR(vertices[i]);
             worldBounds.expand(transformedPoint);
         }
+        
         return worldBounds;
     }
 

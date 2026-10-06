@@ -19,6 +19,7 @@ public class Scene {
         if (name == null){
             throw new IllegalArgumentException("O nome não pode ser nulo.");
         }
+
         this.name = name;
         this.actors = new ArrayList<>();
     }  
@@ -28,6 +29,7 @@ public class Scene {
        if (actor == null) {
             throw new IllegalArgumentException("O ator não pode ser nulo.");
         }
+        
         this.actors.add(actor);
     }
 
