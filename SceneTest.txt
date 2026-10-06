@@ -14,4 +14,8 @@ actor AtorCapsula pose -15.0 0.0 0.0 0.0 0.0 0.0 1.0 capsule super_capsula 2.0 4
 
 actor AtorCaixaSolta pose 5.0 5.0 5.0 0.0 0.0 0.0 1.0 box caixote 3.0 3.0 3.0 1.0 pose 0.0 2.0 0.0 0.0 0.0 0.0 1.0
 
+actor AtorEsferaSolta pose 0.0 10.0 0.0 0.0 0.0 0.0 1.0 sphere bolota 2.5 1.0 pose 0.0 0.0 0.0 0.0 0.0 0.0 1.0
+
+actor AtorCilindroSolto pose 0.0 -10.0 0.0 0.0 0.0 0.0 1.0 cylinder tambor 2.0 3.0 1.0 pose 0.0 0.0 0.0 0.0 0.0 0.0 1.0
+
 mesh ator_f16 f-16.obj 1.0 pose 20.0 10.0 0.0 0.0 0.0 0.0 1.0
