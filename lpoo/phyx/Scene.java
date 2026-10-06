@@ -8,8 +8,7 @@ import java.util.List;
  *         Luis Cardoso
  *         Paola Vendruscolo 
  */
-/* Classe pública que representa a cena
- */
+// Classe pública que representa a cena
 public class Scene {
     private String name;
     private List<RigidBody> actors;
@@ -29,7 +28,7 @@ public class Scene {
        if (actor == null) {
             throw new IllegalArgumentException("O ator não pode ser nulo.");
         }
-        
+
         this.actors.add(actor);
     }
 

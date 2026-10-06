@@ -12,8 +12,7 @@ import java.io.PrintWriter;
  *         Luis Cardoso
  *         Paola Vendruscolo 
  */
-/* Classe principal que gerencia a execução a partir da linha de comando
- */
+// Classe principal que gerencia a execução a partir da linha de comando
 public class Main {
     public static void main(String[] args) {
         // vê se o caminho do arquivo foi fornecido
@@ -43,6 +42,6 @@ public class Main {
             System.out.println("Ocorreu um erro durante a execução:");
             e.printStackTrace();
         }
-        
+
     }
 } // Main

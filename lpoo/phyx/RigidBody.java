@@ -10,7 +10,6 @@ import lpoo.math.*;
  *         Paola Vendruscolo 
  */
 // Classe pública que representa um corpo rígido
- 
 public class RigidBody {
     private String name;
     private Pose pose;
@@ -104,7 +103,7 @@ public class RigidBody {
             Vector3 transformedPoint = pose.transformTR(vertices[i]);
             globalBounds.expand(transformedPoint);
         }
-        
+
         return globalBounds;
     } 
 } // RigidBody

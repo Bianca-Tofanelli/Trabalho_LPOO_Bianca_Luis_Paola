@@ -11,8 +11,7 @@ import java.util.*;
  *         Luis Cardoso
  *         Paola Vendruscolo 
  */
-/* Classe pública que gera o relatório das propriedades dos atores da cena
- */
+// Classe pública que gera o relatório das propriedades dos atores da cena
 public final class SceneReport {
   // percorre a lista de corpos rígidos e imprime suas características
   public static void write(List<RigidBody> bodies, PrintWriter out) {

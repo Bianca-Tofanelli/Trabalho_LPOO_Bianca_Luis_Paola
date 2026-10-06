@@ -7,8 +7,7 @@ import lpoo.math.*;
  *         Luis Cardoso
  *         Paola Vendruscolo 
  */
-/* Classe abstrata que define uma Shape
- */
+// Classe abstrata que define uma Shape
 public abstract class Shape {
     protected String name;
     protected Pose pose;

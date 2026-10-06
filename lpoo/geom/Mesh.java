@@ -8,7 +8,6 @@ import lpoo.math.*;
  *         Luis Cardoso
  *         Paola Vendruscolo 
  */
-
 // A classe publica "Mesh" representa a malha de triangulos , "filha" da classe Shape
 public class Mesh extends Shape {
     // declara os valores pertinentes a composicao da malha
@@ -191,7 +190,7 @@ public class Mesh extends Shape {
             Ixz -= v * exz / 10.0f;
             Iyz -= v * eyz / 10.0f;
         }
-        
+
         Ixx *= this.density;
         Iyy *= this.density;
         Izz *= this.density;

@@ -8,8 +8,7 @@ import lpoo.math.*;
  *         Luis Cardoso
  *         Paola Vendruscolo 
  */
-/* Classe pública, "filha" de Primitive, da esfera
- */
+// Classe pública, "filha" de Primitive, da esfera
 public class Sphere extends Primitive { 
     private float radius;
  
@@ -20,7 +19,7 @@ public class Sphere extends Primitive {
         if (radius <= 0) {
             throw new IllegalArgumentException("radius must be an positive non-zero number");
         }
-        
+
         this.radius = radius;
         updateMassProperties();
     }

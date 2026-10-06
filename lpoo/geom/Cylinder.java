@@ -8,8 +8,7 @@ import lpoo.math.*;
  *         Luis Cardoso
  *         Paola Vendruscolo 
  */
-/* Classe pública, "filha" de Primitive, que define um cilindro
- */
+// Classe pública, "filha" de Primitive, que define um cilindro
 public class Cylinder extends Primitive {
     // armazena o raio e a meia altura
     private float radius;

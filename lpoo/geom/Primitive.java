@@ -8,8 +8,7 @@ import lpoo.math.*;
  *         Luis Cardoso
  *         Paola Vendruscolo 
  */
-/* Classe abstrata das formas primitivas
- */
+// Classe abstrata das formas primitivas
 public abstract class Primitive extends Shape {
     protected float density;
 
