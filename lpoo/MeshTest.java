@@ -1,3 +1,4 @@
+package lpoo;
 import lpoo.geom.*;
 import lpoo.util.*;
 import java.io.*;
